@@ -1,0 +1,17 @@
+<header>
+    <hr>
+        <% if(name){%>
+            Welcome, <%=name%>!(
+            <a href="/user/<%=id%>">내 정보</a>|
+            <a href="/user/logout">로그아웃</a>)
+        <%}else{%>
+            Welcome!
+            <a href="/user/insert">계정생성</a>|
+            <a href="/user/">LogIn</a>
+        <%}%>
+        <a href="/user/list">userList</a>
+        
+        
+
+    <hr>
+</header>

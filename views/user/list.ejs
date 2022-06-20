@@ -1,0 +1,45 @@
+<html>
+    <%-include('../header')%>
+    <body>
+        <table border="1">
+            <tr align="center">
+                <td>
+                    아이디
+                </td>
+                <td>
+                    이메일
+                </td>
+                <td>
+                    학번
+                </td>                
+                <td>
+                    이름
+                </td>                
+                <td>
+                    전화번호
+                </td>
+            </tr>
+            <% for(i = 0 ; i < data.length ; i++){ %>
+                <tr align="center">
+                    <td>
+                        <%= data[i].id%>
+                    </td>
+                    <td>
+                        <%= data[i].email%>
+                    </td>
+                    <td>
+                        <%= data[i].number%>
+                    </td>
+                    <td>
+                        <a href="/user/<%= data[i].id%>"><%= data[i].name%></a>
+                    </td>
+                    <td>
+                        <%= data[i].phone%>
+                    </td>
+                </tr>                
+            <% } %>
+        </table>
+
+    </body>
+    <%-include('../footer')%>
+</html>
