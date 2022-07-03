@@ -1,8 +1,8 @@
 let models = require('../models');
 
-async function getUsers(){
+async function getBoards(){
     try{
-        let data = await models.user.findAll();
+        let data = await models.board.findAll();
         console.log(data);
         return data;
     }catch(err){
@@ -11,7 +11,7 @@ async function getUsers(){
     }
 }
 
-async function logInUser(email){
+async function logInBoard(email){
     try{
         let data = await models.user.findOne({where:{email:email}});
         return data;
@@ -21,7 +21,7 @@ async function logInUser(email){
     }
 }
 
-async function getUser(id){
+async function getBoard(id){
     try{
         let data = await models.user.findOne({where:{id:id}});
         return data;
@@ -31,7 +31,7 @@ async function getUser(id){
     }
 }
 
-async function insertUser(email,password,number,name,phone){
+async function insertBoard(email,password,number,name,phone){
     try{
         await models.user.create({
             email:email,
@@ -39,15 +39,13 @@ async function insertUser(email,password,number,name,phone){
             number:number,
             name:name,
             phone:phone,
-            auth:0,
-            user_status:0
         });
     }catch(err){
         console.log(err);
         throw Error(err);
     }
 }
-async function updateUser(id,email,password,phone){
+async function updateBoard(id,email,password,phone){
     try{
         await models.user.update({
             email:email,
@@ -60,7 +58,7 @@ async function updateUser(id,email,password,phone){
     }
 }
 
-async function deleteUser(id){
+async function deleteBoard(id){
     try{
         await models.user.destroy({where:{id:id}});
     }catch(err){
@@ -69,21 +67,13 @@ async function deleteUser(id){
     }
 }
 
-async function adminCheck(id){
-    try{
-        await models.user.findOne({where:{id:id}});
-    }catch(err){
-        console.log(err);
-        throw Error(err);
-    }
-}
+
 
 module.exports ={
-    adminCheck:adminCheck,
-    logInUser:logInUser,
-    getUser:getUser,
-    getUsers:getUsers,
-    insertUser:insertUser,
-    updateUser:updateUser,
-    deleteUser:deleteUser
+    logInBoard:logInBoard,
+    getBoard:getBoard,
+    getBoards:getBoards,
+    insertBoard:insertBoard,
+    updateBoard:updateBoard,
+    deleteBoard:deleteBoard
 }

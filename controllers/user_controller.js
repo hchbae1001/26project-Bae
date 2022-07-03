@@ -9,6 +9,7 @@ async function loginUser(req,res){
             sess = req.session;
             sess.userName = row.name;
             sess.userId = row.id;
+            sess.userAuth = row.auth;
             return res.redirect('/');
         }else{
             return res.redirect('/user');
@@ -23,20 +24,29 @@ async function getUser(req,res){
     const {id} = req.params;
     try{
         let data = await userService.getUser(id);
-        return res.render('user/detail',{data:data, name:req.session.userName, id:req.session.userId});
+        return res.render('user/detail',{data:data, name:req.session.userName, id:req.session.userId, auth:req.session.userAuth});
     }catch(err){
         return res.status(500).json(err);
     }
 }
 
+//user.auth == 1 관리자인경우만 가능
 async function getUsers(req,res){
-    try{
-        let data = await userService.getUsers();
-        // console.log(data);
-        // // return res.json(data);
-        return res.render('user/list',{data:data, name:req.session.userName, id:req.session.userId})
-    }catch(err){
-        return res.status(500).json(err);
+    let userAuth = req.session.userAuth;
+    console.log(userAuth);
+    if(userAuth == 1){ //관리자인 경우
+        try{
+            let data = await userService.getUsers();
+            return res.render('user/list',{data:data, name:req.session.userName, id:req.session.userId,auth:req.session.userAuth})
+        }catch(err){
+            return res.status(500).json(err);
+        }        
+    }else{
+        try{
+            res.redirect('/user');
+        }catch(err){
+            return res.status(500).json(err);
+        }
     }
 }
 

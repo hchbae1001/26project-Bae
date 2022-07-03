@@ -6,7 +6,7 @@
                 <form action="/user/<%= data.id%>?_method=patch" method="POST">
                     이메일 = <input type="email" name ="email" value="<%= data.email%>"><br>
                     이름 = <input type="text" name="name" value="<%= data.name%>" readonly><br>
-                    비밀번호 = <input type="password" name="password" value="<%= data.password%>"><br>
+                    비밀번호 = <input type="password" name="password" value=""><br>
                     학번 = <input type="number" name="number" value="<%= data.number%>" readonly><br>
                     핸드폰 = <input type="number" name="phone" value="<%= data.phone%>"><br>
                     <input type="submit" value="수정">

@@ -18,6 +18,12 @@
                 <td>
                     전화번호
                 </td>
+                <td>
+                    상태
+                </td>
+                <td>
+                    권한
+                </td>
             </tr>
             <% for(i = 0 ; i < data.length ; i++){ %>
                 <tr align="center">
@@ -35,6 +41,12 @@
                     </td>
                     <td>
                         <%= data[i].phone%>
+                    </td>
+                    <td>
+                        <%= data[i].user_status%>
+                    </td>
+                    <td>
+                        <%= data[i].auth%>
                     </td>
                 </tr>                
             <% } %>
