@@ -8,8 +8,8 @@ function initModels(sequelize) {
   var sessions = _sessions(sequelize, DataTypes);
   var user = _user(sequelize, DataTypes);
 
-  // board.belongsTo(board, { as: "user", foreignKey: "user_id"});
-  // board.hasMany(board, { as: "boards", foreignKey: "user_id"});
+  board.belongsTo(board, { as: "user", foreignKey: "user_id"});
+  board.hasMany(board, { as: "boards", foreignKey: "user_id"});
 
   return {
     board,

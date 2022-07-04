@@ -4,14 +4,14 @@ let userController = require('../controllers/user_controller');
 
 //로그인
 router.get('/',function(req,res){
-  return res.render('user/login',{name:req.session.userName,id:req.session.userId});
+  return res.render('user/login',{name:req.session.userName,id:req.session.userId,auth:req.session.userAuth});
 });
 router.post('/', userController.loginUser);
 // 로그아웃
 router.get('/logout', userController.logOutUser);
 //회원가입 폼 페이지 + 가입
 router.get('/insert',function(req,res){
-  res.render('user/insert',{name:req.session.userName,id:req.session.userId});
+  res.render('user/insert',{name:req.session.userName,id:req.session.userId, auth:req.session.userAuth});
 });
 router.post('/insert',userController.insertUser);
 

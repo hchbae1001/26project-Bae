@@ -40,17 +40,18 @@ async function insertUser(email,password,number,name,phone){
             name:name,
             phone:phone,
             auth:0,
-            user_status:0
+            user_status:0,
+            failStack:0
         });
     }catch(err){
         console.log(err);
         throw Error(err);
     }
 }
-async function updateUser(id,email,password,phone){
+//정보 수정은 개명, 학번이 바뀔일이 거의 없다는 가정 하에 password, phone 으로 제한한다.
+async function updateUser(id,password,phone){
     try{
         await models.user.update({
-            email:email,
             password:password,
             phone:phone,
         },{where:{id:id}});
@@ -69,9 +70,25 @@ async function deleteUser(id){
     }
 }
 
-async function adminCheck(id){
+async function loginFail(email){
     try{
-        await models.user.findOne({where:{id:id}});
+        let data = await models.user.findOne({where:{email:email}});
+        //email이 일치하는 label을 찾아 failstack 1 증가.
+        console.log(data.user_status + "<- status ,stack ->"+ data.failStack)
+        if(data.failStack < 5 && data.failStack >= 0){
+            await models.user.increment({failStack:1}, {where:{email:email}});
+        }else if(data.failStack >= 5){
+            await models.user.update({user_status:1},{where:{email:email}});
+        }
+    }catch(err){
+        console.log(err);
+        throw Error(err);
+    }
+}
+
+async function loginSuccess(email){
+    try{
+        await models.user.update({failStack:0},{where:{email:email}});
     }catch(err){
         console.log(err);
         throw Error(err);
@@ -79,7 +96,8 @@ async function adminCheck(id){
 }
 
 module.exports ={
-    adminCheck:adminCheck,
+    loginSuccess:loginSuccess,
+    loginFail:loginFail,
     logInUser:logInUser,
     getUser:getUser,
     getUsers:getUsers,

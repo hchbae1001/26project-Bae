@@ -9,9 +9,9 @@
             <a href="/user/insert">계정생성</a>|
             <a href="/user/">LogIn</a>
         <%}%>
+        <!--관리자만 유저 리스트 기능을 이용할 수 있음. / 외부인이 위 기능을 수행하려 할 경우 자동으로 로그인창으로 돌아옴-->
+        <% if(auth == 1){%>
         <a href="/user/list">userList</a>
-        
-        
-
+        <% }%>
     <hr>
 </header>
