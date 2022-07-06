@@ -1,6 +1,8 @@
 <html>
     <%-include('../header')%>
     <body>
+        <a href="/user/list?page=3">pagination 1 to 3</a>
+        총 갯수 : <%= data.length%>
         <table border="1">
             <tr align="center">
                 <td>
@@ -17,6 +19,9 @@
                 </td>                
                 <td>
                     전화번호
+                </td>
+                <td>
+                    생성일
                 </td>
                 <td>
                     상태
@@ -41,6 +46,9 @@
                     </td>
                     <td>
                         <%= data[i].phone%>
+                    </td>
+                    <td>
+                        <%= data[i].createdAt%>
                     </td>
                     <td>
                         <%= data[i].user_status%>

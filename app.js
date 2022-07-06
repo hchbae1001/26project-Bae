@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/users');
+var boardRouter = require('./routes/board');
+var pushRouter = require('./routes/push');
 // let boardRouter = require('./routes/board');
 // hash 암호화
 let bcrypt = require('bcrypt');
@@ -44,8 +46,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/node_modules', express.static(path.join(__dirname + '/node_modules'))); //jQuery
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // bootstrap JS
+app.use('/css',express.static(__dirname + '/node_modules/bootstrap/dist/css')); //CSS bootstrap
+
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/board', boardRouter);
+app.use('/push', pushRouter);
 //app.use('/board', boardRouter);///
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

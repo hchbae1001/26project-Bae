@@ -1,8 +1,14 @@
 let models = require('../models');
 
-async function getUsers(){
+async function getUsers(offset,limit){
     try{
-        let data = await models.user.findAll();
+        let data = await models.user.findAndCountAll({
+            //학번순으로 오름차순 정렬
+            offset: offset,
+            limit: limit,
+            order:[['number','asc']],
+            where:{auth:0}
+        });
         console.log(data);
         return data;
     }catch(err){
@@ -31,6 +37,20 @@ async function getUser(id){
     }
 }
 
+// async function paginationUser(offset,limit){
+//     try{
+//         let data = await models.user.findAndCountAll({
+//             offset: offset,
+//             limit: limit,
+//             order: [['number','asc']]
+//         });
+//         return data;
+//     }catch(err){
+//         console.log(err);
+//         throw Error(err);
+//     }
+// }
+
 async function insertUser(email,password,number,name,phone){
     try{
         await models.user.create({
@@ -41,7 +61,11 @@ async function insertUser(email,password,number,name,phone){
             phone:phone,
             auth:0,
             user_status:0,
-            failStack:0
+            failStack:0,
+            new:1
+        });
+        await models.push.create({
+
         });
     }catch(err){
         console.log(err);
@@ -96,6 +120,7 @@ async function loginSuccess(email){
 }
 
 module.exports ={
+    // paginationUser:paginationUser,
     loginSuccess:loginSuccess,
     loginFail:loginFail,
     logInUser:logInUser,

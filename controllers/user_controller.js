@@ -48,15 +48,35 @@ async function getUser(req,res){
         return res.status(500).json(err);
     }
 }
+// async function paginationUser(req,res){
+//     let pageNum = req.query.page;
+//     let limit = 10;
+//     let offset = 0 + (pageNum - 1) * limit;
+//     try{
+//         await userService.paginationUser(offset,limit);
+//         return res.render('user/list',{
+//             data:data, name:req.session.userName,
+//             id:req.session.userId, auth:req.session.userAuth
+//         });
+//     }catch(err){
+//         return res.status(500).json(err);
+//     }
+// }
+
 
 //user.auth == 1 관리자인경우만 가능
 async function getUsers(req,res){
+    let page = req.query.page;
+    if(page == undefined){
+        page = 1;
+    }
+    let limit = 2;
+    let offset = 0 + (page - 1) * limit;
     let userAuth = req.session.userAuth;
-    console.log(userAuth);
     if(userAuth == 1){ //관리자인 경우
         try{
-            let data = await userService.getUsers();
-            return res.render('user/list',{data:data, name:req.session.userName, id:req.session.userId,auth:req.session.userAuth})
+            let data = await userService.getUsers(offset,limit);
+            return res.render('user/list',{data:data.rows, name:req.session.userName, id:req.session.userId,auth:req.session.userAuth})
         }catch(err){
             return res.status(500).json(err);
         }        

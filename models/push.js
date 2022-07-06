@@ -1,52 +1,40 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
+  return sequelize.define('push', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    email: {
+    user_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
+    },
+    subject: {
       type: DataTypes.CHAR(30),
       allowNull: true
     },
-    name: {
-      type: DataTypes.CHAR(11),
+    text: {
+      type: DataTypes.CHAR(200),
       allowNull: true
     },
-    password: {
-      type: DataTypes.CHAR(255),
+    date: {
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
-    phone: {
-      type: DataTypes.CHAR(25),
-      allowNull: true
-    },
-    number: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    user_status: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    auth: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    failStack: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    new: {
+    status: {
       type: DataTypes.BOOLEAN,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'user',
-    timestamps: true,
+    tableName: 'push',
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",
@@ -54,6 +42,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "user_push",
+        using: "BTREE",
+        fields: [
+          { name: "user_id" },
         ]
       },
     ]
