@@ -34,64 +34,44 @@ async function loginUser(req,res){
 
 async function getUser(req,res){
     const {id} = req.params;
+    let userId = req.session.userId;
     let userAuth = req.session.userAuth;
-    console.log(userAuth);
-    try{
-        let data = await userService.getUser(id);
-        console.log(data.id)
-        if(id == data.id || userAuth == 1){
+    console.log(userAuth, userId, id);
+    if(userId == id || userAuth == 1){
+        try{
+            let data = await userService.getUser(id);
             return res.render('user/detail',{data:data, name:req.session.userName, id:req.session.userId, auth:req.session.userAuth});
+        }catch(err){
+            return res.status(500).json(err);
+        }
+    }else{
+        console.log("warning");
+        return res.redirect('/')
+    }
+
+}
+
+//user.auth == 1 관리자인경우만 가능
+async function getUsers(req,res){
+    let page = req.query.page;
+    if(page == undefined){page = 1;}
+    let limit = 5;
+    let offset = 0 + (page - 1) * limit;
+    let userAuth = req.session.userAuth;
+    try{
+        if(userAuth == 1){
+            let data = await userService.getUsers(offset,limit);
+            return res.render('user/list',{pageNum:page,limit:limit,count:data.count,data:data.rows, name:req.session.userName, id:req.session.userId,auth:req.session.userAuth})
         }else{
-            console.log("warning");
+            res.redirect('/user');
         }
     }catch(err){
         return res.status(500).json(err);
     }
 }
-// async function paginationUser(req,res){
-//     let pageNum = req.query.page;
-//     let limit = 10;
-//     let offset = 0 + (pageNum - 1) * limit;
-//     try{
-//         await userService.paginationUser(offset,limit);
-//         return res.render('user/list',{
-//             data:data, name:req.session.userName,
-//             id:req.session.userId, auth:req.session.userAuth
-//         });
-//     }catch(err){
-//         return res.status(500).json(err);
-//     }
-// }
-
-
-//user.auth == 1 관리자인경우만 가능
-async function getUsers(req,res){
-    let page = req.query.page;
-    if(page == undefined){
-        page = 1;
-    }
-    let limit = 2;
-    let offset = 0 + (page - 1) * limit;
-    let userAuth = req.session.userAuth;
-    if(userAuth == 1){ //관리자인 경우
-        try{
-            let data = await userService.getUsers(offset,limit);
-            return res.render('user/list',{data:data.rows, name:req.session.userName, id:req.session.userId,auth:req.session.userAuth})
-        }catch(err){
-            return res.status(500).json(err);
-        }        
-    }else{
-        try{
-            res.redirect('/user');
-        }catch(err){
-            return res.status(500).json(err);
-        }
-    }
-}
 
 async function insertUser(req,res){
-    const {email,password,number,name,phone1,phone2,phone3} = req.body
-    let phone = phone1 + phone2 + phone3;
+    const {email,password,number,name,phone} = req.body
     try{
         const encryptedPW = bcrypt.hashSync(password, 10);
         await userService.insertUser(email,encryptedPW,number,name,phone);
@@ -103,11 +83,22 @@ async function insertUser(req,res){
 
 async function updateUser(req,res){
     const {id} = req.params;
-    const {password,phone} = req.body;
+    const {email,password,phone} = req.body;
+    let userAuth = req.session.userAuth;
+    let userId = req.session.userId;
+    console.log(password);
     try{
-        const encryptedPW = bcrypt.hashSync(password, 10);
-        await userService.updateUser(id,encryptedPW,phone);
-        return res.redirect('/user/logout');
+        if(!password){
+            await userService.updateUserExceptPwd(id,email,phone);
+        }else{
+            const encryptedPW = bcrypt.hashSync(password, 10);
+            await userService.updateUser(id,email,encryptedPW,phone);
+        }
+        if(userAuth == 1){
+            return res.redirect('/user/list');
+        }else if(userId == id){
+            return res.redirect('/user/logout');
+        }
     }catch(err){
         return res.status(500).json(err);
     }
@@ -115,17 +106,23 @@ async function updateUser(req,res){
 
 async function deleteUser(req,res){
     let userAuth = req.session.userAuth;
+    let userId = req.session.userId;
     const {id} = req.params;
     console.log("userDelete");
-    try{
-        await userService.deleteUser(id);
-        if(userAuth == 1){
-            return res.redirect('/user/list');
-        }else{
-            return res.redirect('/user/logout');
+    if(userId == id || userAuth == 1){
+        try{
+            await userService.deleteUser(id);
+            if(userAuth == 1){
+                return res.redirect('/user/list');
+            }else{
+                return res.redirect('/user/logout');
+            }
+        }catch(err){
+            return res.status(500).json(err);
         }
-    }catch(err){
-        return res.status(500).json(err);
+    }else{
+        console.log("warning");
+        res.redirect('/');
     }
 }
 

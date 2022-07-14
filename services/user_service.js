@@ -37,20 +37,6 @@ async function getUser(id){
     }
 }
 
-// async function paginationUser(offset,limit){
-//     try{
-//         let data = await models.user.findAndCountAll({
-//             offset: offset,
-//             limit: limit,
-//             order: [['number','asc']]
-//         });
-//         return data;
-//     }catch(err){
-//         console.log(err);
-//         throw Error(err);
-//     }
-// }
-
 async function insertUser(email,password,number,name,phone){
     try{
         await models.user.create({
@@ -64,20 +50,32 @@ async function insertUser(email,password,number,name,phone){
             failStack:0,
             new:1
         });
-        await models.push.create({
-
-        });
     }catch(err){
         console.log(err);
         throw Error(err);
     }
 }
 //정보 수정은 개명, 학번이 바뀔일이 거의 없다는 가정 하에 password, phone 으로 제한한다.
-async function updateUser(id,password,phone){
+async function updateUser(id,email,password,phone){
+    console.log("contain pwd");
     try{
         await models.user.update({
+            email:email,
             password:password,
             phone:phone,
+        },{where:{id:id}});
+    }catch(err){
+        console.log(err);
+        throw Error(err);
+    }
+}
+
+async function updateUserExceptPwd(id,email,phone){
+    console.log("except pwd")
+    try{
+        await models.user.update({
+            email:email,
+            phone:phone
         },{where:{id:id}});
     }catch(err){
         console.log(err);
@@ -120,7 +118,6 @@ async function loginSuccess(email){
 }
 
 module.exports ={
-    // paginationUser:paginationUser,
     loginSuccess:loginSuccess,
     loginFail:loginFail,
     logInUser:logInUser,
@@ -128,5 +125,6 @@ module.exports ={
     getUsers:getUsers,
     insertUser:insertUser,
     updateUser:updateUser,
-    deleteUser:deleteUser
+    deleteUser:deleteUser,
+    updateUserExceptPwd:updateUserExceptPwd
 }

@@ -2,7 +2,9 @@ let models = require('../models');
 
 async function getPushes(id){
     try{
-        let data = await models.push.findAll({where:{user_id:id}});
+        let data = await models.push.findAll(
+            {where:{user_id:id}
+        });
         console.log(data);
         return data;
     }catch(err){
