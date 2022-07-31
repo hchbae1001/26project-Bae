@@ -11,16 +11,6 @@ async function getBoards(){
     }
 }
 
-async function logInBoard(email){
-    try{
-        let data = await models.user.findOne({where:{email:email}});
-        return data;
-    }catch(err){
-        console.log(err);
-        throw Error(err);
-    }
-}
-
 async function getBoard(id){
     try{
         let data = await models.user.findOne({where:{id:id}});
@@ -31,26 +21,23 @@ async function getBoard(id){
     }
 }
 
-async function insertBoard(email,password,number,name,phone){
+async function insertBoard(user_id,name,text){
     try{
         await models.user.create({
-            email:email,
-            password:password,
-            number:number,
+            user_id:user_id,
             name:name,
-            phone:phone,
+            text:text
         });
     }catch(err){
         console.log(err);
         throw Error(err);
     }
 }
-async function updateBoard(id,email,password,phone){
+async function updateBoard(name,text){
     try{
         await models.user.update({
-            email:email,
-            password:password,
-            phone:phone,
+            name:name,
+            text:text
         },{where:{id:id}});
     }catch(err){
         console.log(err);
@@ -70,7 +57,6 @@ async function deleteBoard(id){
 
 
 module.exports ={
-    logInBoard:logInBoard,
     getBoard:getBoard,
     getBoards:getBoards,
     insertBoard:insertBoard,

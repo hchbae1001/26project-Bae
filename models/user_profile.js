@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('board', {
+  return sequelize.define('user_profile', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
@@ -11,22 +11,29 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
-        model: 'board',
+        model: 'user',
         key: 'id'
       }
     },
-    name: {
-      type: DataTypes.CHAR(100),
+    img: {
+      type: DataTypes.INTEGER,
       allowNull: true
     },
-    text: {
-      type: DataTypes.CHAR(255),
-      allowNull: false,
-      defaultValue: "Text"
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    gender: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    birth: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'board',
+    tableName: 'user_profile',
     timestamps: true,
     indexes: [
       {
@@ -38,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "board_user",
+        name: "u_profile",
         using: "BTREE",
         fields: [
           { name: "user_id" },

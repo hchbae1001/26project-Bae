@@ -32,8 +32,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     auth: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
     },
     failStack: {
       type: DataTypes.INTEGER,

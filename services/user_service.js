@@ -1,5 +1,5 @@
 let models = require('../models');
-
+let pushService = require('./push_service');
 async function getUsers(offset,limit){
     try{
         let data = await models.user.findAndCountAll({
@@ -50,6 +50,12 @@ async function insertUser(email,password,number,name,phone){
             failStack:0,
             new:1
         });
+        await models.user.findOne({where:{auth:1}})
+        // let userId = ;
+        // let subject = "아이디 생성";
+        // let text = "email :" + email + "name :" + name;
+        // await pushService.insertPushes();
+
     }catch(err){
         console.log(err);
         throw Error(err);

@@ -2,7 +2,12 @@ var express = require('express');
 var router = express.Router();
 let boardController = require('../controllers/board_controller');
 
-/* GET home page. */
-router.get('/',);
+router.get('/', boardController.getBoards);
+router.post('/',boardController.insertBoard);
+
+router.patch('/:id',boardController.updateBoard);
+router.delete('/:id',boardController.deleteBoard);
+
+router.get('/:id',boardController.getBoard);
 
 module.exports = router;
