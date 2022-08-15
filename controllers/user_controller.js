@@ -1,5 +1,6 @@
 let userService = require('../services/user_service');
 const bcrypt = require('bcrypt');
+const mailer = require('../services/mail_service');
 
 async function loginUser(req,res){
     const {email,password} = req.body
@@ -20,7 +21,13 @@ async function loginUser(req,res){
             //로그인 실패 시 || user_status != 0 (활성화가 아닐 시), stack 1증가.
             console.log('access denied');
             if(user.user_status == 1){
-                console.log(email+": 계정 이용 제한");   
+                console.log(email+": 계정 이용 제한");
+                //계정 잠금시, admin 에게 email 발송
+                let msgInfo = {
+                    subject:email + ": 계정 이용 제한",
+                    text: email+ "유저가 로그인을 수회 실피하여 계정 잠금"
+                }
+                mailer.sendGmail(msgInfo);
             }else{
                 await userService.loginFail(email);
             }
@@ -55,7 +62,7 @@ async function getUser(req,res){
 async function getUsers(req,res){
     let page = req.query.page;
     if(page == undefined){page = 1;}
-    let limit = 5;
+    let limit = 10;
     let offset = 0 + (page - 1) * limit;
     let userAuth = req.session.userAuth;
     try{
@@ -71,12 +78,20 @@ async function getUsers(req,res){
 }
 
 async function insertUser(req,res){
-    const {email,password,number,name,phone} = req.body
+    //신규 사용자 가입 시, 관리자에 메일 보냄
+    const {email,password,number,name,phone} = req.body;
+    let msgInfo = {
+        subject: "새로운 사용자" + name + "가입 신청",
+        text: "이름 : " + name + ", 학번 :" + number
+    };
     try{
         const encryptedPW = bcrypt.hashSync(password, 10);
         await userService.insertUser(email,encryptedPW,number,name,phone);
+        //계정 생성시, admin에게 email 발송
+        mailer.sendGmail(msgInfo);
         return res.redirect('/user');
     }catch(err){
+        console.log(err)
         return res.status(500).json(err);
     }
 }

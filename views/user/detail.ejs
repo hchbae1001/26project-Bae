@@ -56,12 +56,12 @@
                     <label class="form-label" for="form3Example4cdg">Repeat your password</label>
                     <input type="password" id="password4" class="form-control form-control" />
                 </div>
-
-                <div class="d-flex justify-content-center">
-                  <button type="submit" id="submit1"
-                    class="w-100 mb-2 btn btn-lg rounded-3 btn-primary">Update</button>
-                </div>
                 <input type="button" id="delete1" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" value="Delete"/>
+                <div class="d-flex justify-content-center">
+                  
+                  <button type="submit" id="submit1" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary">Update</button>
+                </div>
+                
               </form>
 
             </div>
@@ -82,7 +82,6 @@
       $("#alert-success1").hide();
       $("#alert-danger1").hide();
       $("#submit1").hide();
-      $("#delete1").hide();
       $("input").keyup(function(){
           var pwd1=$("#password3").val();
           var pwd2=$("#password4").val();
@@ -90,12 +89,10 @@
                   $("#alert-success1").show();
                   $("#alert-danger1").hide();
                   $("#submit1").show();
-                  $("#delete1").show();
               }else{
                   $("#alert-success1").hide();
                   $("#alert-danger1").show();
                   $("#submit1").hide();
-                  $("#delete1").hide();
               }    
       });
     });

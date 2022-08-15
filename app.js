@@ -49,6 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/jQuery', express.static((__dirname + '/node_modules/jquery/dist/'))); //jQuery
 app.use('/bootStrap', express.static(__dirname + '/node_modules/bootstrap/dist/')); // bootstrap JS
 app.use('/js',express.static(__dirname + '/public/javascripts/'));
+app.use('/css',express.static(__dirname + '/public/stylesheets/'));
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/board', boardRouter);
