@@ -13,7 +13,7 @@ async function getBoards(){
 
 async function getBoard(id){
     try{
-        let data = await models.user.findOne({where:{id:id}});
+        let data = await models.board.findOne({where:{id:id}});
         return data;
     }catch(err){
         console.log(err);
@@ -21,11 +21,11 @@ async function getBoard(id){
     }
 }
 
-async function insertBoard(user_id,name,text){
+async function insertBoard(user_id,title,text){
     try{
-        await models.user.create({
+        await models.board.create({
             user_id:user_id,
-            name:name,
+            title:title,
             text:text
         });
     }catch(err){
@@ -33,10 +33,10 @@ async function insertBoard(user_id,name,text){
         throw Error(err);
     }
 }
-async function updateBoard(name,text){
+async function updateBoard(title,text){
     try{
-        await models.user.update({
-            name:name,
+        await models.board.update({
+            title:title,
             text:text
         },{where:{id:id}});
     }catch(err){
@@ -47,7 +47,7 @@ async function updateBoard(name,text){
 
 async function deleteBoard(id){
     try{
-        await models.user.destroy({where:{id:id}});
+        await models.board.destroy({where:{id:id}});
     }catch(err){
         console.log(err);
         throw Error(err);

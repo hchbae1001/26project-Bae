@@ -9,13 +9,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     user_id: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      references: {
-        model: 'board',
-        key: 'id'
-      }
+      allowNull: false
     },
-    name: {
+    title: {
       type: DataTypes.CHAR(100),
       allowNull: true
     },

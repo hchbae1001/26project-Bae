@@ -76,6 +76,7 @@
       </a>
 
       <div class="col-md-3 text-end">
+        <a href="/board/insert">regBoard</a>
         <% if(name) {%>
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/user/<%=id%>" class="nav-link px-2 link-secondary">Status</a></li>
@@ -84,6 +85,7 @@
               <li><a href="/user/list" class="nav-link px-2 link-dark">UserList</a></li>
             <% }%>
           </ul>
+          
         <% } else{ %>
             <!-- <button type="button" class="btn btn-outline-primary me-2">Login</button> -->
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signInModal">Sign in</button>

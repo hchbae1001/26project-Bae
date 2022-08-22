@@ -1,17 +1,66 @@
 <html>
     <%-include('../header')%>
     <body>
-        <form action="/user/insert" method="POST">
-            이메일 = <input type="email" name ="email"><br>
-            비밀번호 = <input type="password" name="password"><br>
-            학번 = <input type="text" name="number" maxlength="8"><br>
-            이름 = <input type="text" name="name"><br>
-            핸드폰 = <input type="text" name="phone1" maxlength="3" style="width:30px;">
-            - <input type="text" name="phone2" maxlength="4" style="width:40px;">
-            - <input type="text" name="phone3" maxlength="4" style="width:40px;"><br>
-            
-            <input type="submit" value="Submit">
-            </form>
+<!-- Page Header -->
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Write a Blog </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form action="/board" method="post">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Title</label>
+              <input type="text" class="form-control" name="title" placeholder="Title" id="title">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Content</label>
+              <textarea rows="10" class="form-control" name="text" placeholder="Content" id="text"></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Write</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+
     </body>
     <%-include('../footer')%>
 </html>
+
+          <!-- <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>File</label>
+              <input type="file" class="form-control" name="filepath" placeholder="File Path" id="filepath" required data-validation-required-message="Please enter your name.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>           -->
+          <!-- <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Writer</label>
+              <input type="text" class="form-control" name="writer" th:value="${session.email}" placeholder="Blogger" id="blogger" readonly>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div> -->
