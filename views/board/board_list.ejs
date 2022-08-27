@@ -1,7 +1,76 @@
 <html>
     <%-include('../header')%>
     <body>
-
+        <div class="container justify-content-center">
+            Total Count : <%= count%><br><br>
+        <table class="table table-striped table-hover"  border="1">
+            <tr align="center">
+                <td width="5%">
+                    Id
+                </td>
+                <td width="15%">
+                    제목
+                </td>
+                <td width="15%">
+                    작성자
+                </td>
+                <td width="15%">
+                    생성일
+                </td>
+                <td width="15%">
+                    수정일
+                </td>
+            </tr>
+            <% for(i = 0 ; i < data.length ; i++){ %>
+                <tr align="center">
+                    <td>
+                        <%= data[i].id%>
+                    </td>
+                    <td>
+                        <% if(data[i].user_name == undefined){ %>
+                            NULL
+                        <% }else{ %>
+                            <%= data[i].user_name%>
+                        <% } %>
+                    </td>
+                    <td>
+                        <a href="/board/<%= data[i].id%>"> <%= data[i].title%> </a> 
+                    </td>
+                    <td>
+                        <%= data[i].createdAt%>
+                    </td>
+                    <td>
+                        <%= data[i].updatedAt%>
+                    </td>
+                </tr>                
+            <% } %>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination  justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Previous">
+                  <span aria-hidden="true">&laquo; First</span>
+                </a>
+              </li>
+              <% let lastPage = Math.ceil(count/limit)%>
+              <% %>
+              <% for(let page = 1 ; page <= lastPage; page++){ %>
+                <% if(pageNum == page){ %>
+                    <li class="page-item active">
+                <% }else{ %>
+                    <li class="page-item">
+                <% } %>
+                    <a href="?page=<%= page%>" class="page-link"><%= page%></a>
+                </li>
+              <% } %>
+              <li class="page-item">
+                
+                <a class="page-link disabled" href="?page=<%= lastPage%>" aria-label="Next">
+                  <span aria-hidden="true">Last &raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
     </body>
     <%-include('../footer')%>
 </html>

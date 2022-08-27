@@ -8,8 +8,12 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     user_id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false
+    },
+    user_name: {
+      type: DataTypes.CHAR(11),
+      allowNull: true
     },
     title: {
       type: DataTypes.CHAR(100),

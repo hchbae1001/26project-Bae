@@ -75,15 +75,16 @@
         <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
       </a>
 
-      <div class="col-md-3 text-end">
-        <a href="/board/insert">regBoard</a>
+      <div class="col-md-5 text-end">
         <% if(name) {%>
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="/user/<%=id%>" class="nav-link px-2 link-secondary">Status</a></li>
-            <li><a href="/user/logout" class="nav-link px-2 link-dark">LogOut</a></li>
+            <li><a href="/board/insert" class="nav-link px-2 link-dark">insertBoard</a></li>
+            <li><a href="/board" class="nav-link px-2 link-dark">boardList</a></li>
+            <li><a href="/user/<%=id%>" class="nav-link px-2 link-dark">userStatus</a></li>
             <% if(auth == 1){%>
               <li><a href="/user/list" class="nav-link px-2 link-dark">UserList</a></li>
             <% }%>
+            <li><a href="/user/logout" class="nav-link px-2 link-dark">LogOut</a></li>
           </ul>
           
         <% } else{ %>

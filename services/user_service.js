@@ -1,5 +1,4 @@
 let models = require('../models');
-let pushService = require('./push_service');
 async function getUsers(offset,limit){
     try{
         let data = await models.user.findAndCountAll({

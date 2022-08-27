@@ -1,7 +1,75 @@
 <html>
     <%-include('../header')%>
     <body>
-
+<!-- Page Header -->
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Write a Blog </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form action="/board/<%= data.id%>?_method=patch" method="post">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Title</label>
+              <input type="text" class="form-control" name="title" placeholder="Title" id="title" value="<%= data.title%>"
+              <% if(auth == 1 || id == data.user_id){}else{readonly} %>>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Content</label>
+              <textarea rows="10" class="form-control" name="text" placeholder="Content" id="text" 
+              <% if(auth == 1 || id == data.user_id){}else{readonly} %>
+              ><%= data.text%></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <% if(auth == 1 || id == data.user_id){ %>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Edit</button>
+            <input type="button" class="btn btn-secondary" id="deleteButton" value="Delete">
+          </div>
+          <% } %>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr>
     </body>
+    <script type="text/javascript">
+      $(function(){
+        $("#deleteButton").click(function(){
+          console.log("delete1 Clicked");
+          deleteClick();
+        });
+      });
+      function deleteClick(){
+      var form = document.createElement("form");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action", "/board/<%= data.id%>?_method=delete");
+      
+      var userIdHidden = document.createElement("input");
+      userIdHidden.setAttribute("type", "hidden");
+      userIdHidden.setAttribute("name", "user_id");
+      userIdHidden.setAttribute("value", "<%= data.user_id%>");
+      form.appendChild(userIdHidden);
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
     <%-include('../footer')%>
 </html>

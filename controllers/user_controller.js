@@ -47,7 +47,7 @@ async function getUser(req,res){
     if(userId == id || userAuth == 1){
         try{
             let data = await userService.getUser(id);
-            return res.render('user/detail',{data:data, name:req.session.userName, id:req.session.userId, auth:req.session.userAuth});
+            return res.render('user/user_detail',{data:data, name:req.session.userName, id:req.session.userId, auth:req.session.userAuth});
         }catch(err){
             return res.status(500).json(err);
         }
@@ -68,7 +68,7 @@ async function getUsers(req,res){
     try{
         if(userAuth == 1){
             let data = await userService.getUsers(offset,limit);
-            return res.render('user/list',{pageNum:page,limit:limit,count:data.count,data:data.rows, name:req.session.userName, id:req.session.userId,auth:req.session.userAuth})
+            return res.render('user/user_list',{pageNum:page,limit:limit,count:data.count,data:data.rows, name:req.session.userName, id:req.session.userId,auth:req.session.userAuth})
         }else{
             res.redirect('/user');
         }
