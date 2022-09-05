@@ -248,7 +248,7 @@ async function loginUser(req,res){
 
 
 
-#개발 과정
+# 개발 과정
 
 ```
 user
@@ -271,9 +271,9 @@ board
 ```
 
 
-#개발 환경 : JavaScript, HTML, CSS, MySQL
+# 개발 환경 : JavaScript, HTML, CSS, MySQL
 
-#개발 계획 : 6월 25일 ~ 9월 1주차.
+# 개발 계획 : 6월 25일 ~ 9월 1주차.
 ```
 1주차
 개발환경 세팅 및 구조 구상 / sql session seqeulize 를이용한 로그인 기능 개발.
@@ -313,7 +313,7 @@ Admin , User, Blog 기능 제작 완료
 ```
 <hr/>
 
-#개선해야 할 점
+# 개선해야 할 점
 ```
  board.id 와 comment.board_id 를 FK로 맺어놓고 seqeulize-auto 로 db정보를 자동으로 넘기면
 join 문으로 한번에 불러오지 못하는 Issue가 있었습니다.
