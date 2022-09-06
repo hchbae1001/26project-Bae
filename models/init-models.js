@@ -1,28 +1,23 @@
 var DataTypes = require("sequelize").DataTypes;
 var _board = require("./board");
-var _push = require("./push");
+var _comment = require("./comment");
 var _sessions = require("./sessions");
 var _user = require("./user");
-var _user_profile = require("./user_profile");
 
 function initModels(sequelize) {
   var board = _board(sequelize, DataTypes);
-  var push = _push(sequelize, DataTypes);
+  var comment = _comment(sequelize, DataTypes);
   var sessions = _sessions(sequelize, DataTypes);
   var user = _user(sequelize, DataTypes);
-  var user_profile = _user_profile(sequelize, DataTypes);
 
-  push.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(push, { as: "pushes", foreignKey: "user_id"});
-  user_profile.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(user_profile, { as: "user_profiles", foreignKey: "user_id"});
+  comment.belongsTo(board, { as: "board", foreignKey: "board_id"});
+  board.hasMany(comment, { as: "comments", foreignKey: "board_id"});
 
   return {
     board,
-    push,
+    comment,
     sessions,
     user,
-    user_profile,
   };
 }
 module.exports = initModels;

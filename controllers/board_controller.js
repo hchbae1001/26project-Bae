@@ -28,10 +28,10 @@ async function regBoardForm(req,res){
 
 async function getBoard(req,res){
     const {id} = req.params;
-    try{
+    try{ 
         let data = await boardService.getBoard(id);
-        console.log(data);
-        return res.render('board/board_detail',{data:data, name:req.session.userName, id:req.session.userId, auth:req.session.userAuth})
+        let comment = await boardService.getComments(id);
+        return res.render('board/board_detail',{data:data,comment:comment,name:req.session.userName, id:req.session.userId, auth:req.session.userAuth})
     }catch(err){
         return res.status(500).json(err);
     }
@@ -77,6 +77,39 @@ async function deleteBoard(req,res){
         return res.status(500).json(err);
     }
 }
+async function insertComment(req,res){
+    const {id} = req.params;
+    const {userId,userAuth,userName} = req.session;
+    const {text} = req.body;
+    try{
+        if(userId){
+            await boardService.insertComment(id,userId,userName,text);
+        }else{
+            console.log('warning');
+        }
+        return res.redirect('/board/'+id);
+    }catch(err){
+        return res.status(500).json(err);
+    }
+}
+async function deleteComment(req,res){
+    const {id} = req.params;
+    try{
+        await boardService.deleteComment(id);
+    }catch(err){
+        return res.status(500).json(err);
+    }
+}
+async function updateComment(req,res){
+    const {id} = req.params;
+    const {text} = req.body;
+    try{
+        await boardService.updateBoard(text,id);
+    }catch(err){
+        return res.status(500).json(err);
+    }
+}
+
 
 module.exports={
     getBoard:getBoard,
@@ -84,5 +117,8 @@ module.exports={
     insertBoard:insertBoard,
     updateBoard:updateBoard,
     deleteBoard:deleteBoard,
-    regBoardForm:regBoardForm
+    regBoardForm:regBoardForm,
+    insertComment:insertComment,
+    deleteComment:deleteComment,
+    updateComment:updateComment
 }

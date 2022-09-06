@@ -16,12 +16,12 @@
                 <td width="15%">
                     학번
                 </td>                
-                <!-- <td width="10%">
+                <td width="10%">
                     이름
                 </td>                
                 <td width="15%">
                     전화번호
-                </td> -->
+                </td>
                 <td width="15%">
                     생성일
                 </td>
@@ -53,9 +53,9 @@
                     </td>
                     <td>
                         <% if(data[i].user_status == false){ %>
-                            활성
+                            <a href="/user/status?id=<%= data[i].id%>&how='OFF'">활성 상태</a> 
                         <%}else{%>
-                            비활성
+                            <a href="/user/stauts?id=<%= data[i].id%>&how='ON'">비활성 상태</a> 
                         <%}%>
                         
                     </td>
@@ -63,7 +63,7 @@
             <% } %>
         </table>
     </div>
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation">
             <ul class="pagination  justify-content-center">
               <li class="page-item">
                 <a class="page-link" href="?page=1" aria-label="Previous">

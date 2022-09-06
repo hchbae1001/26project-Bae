@@ -1,32 +1,36 @@
 const Sequelize = require('sequelize');
+const board = require('./board');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('board', {
+  return sequelize.define('comment', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
+    board_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: {
+        model: 'board',
+        key: 'id'
+      }
+    },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     },
     user_name: {
       type: DataTypes.CHAR(11),
       allowNull: true
     },
-    title: {
-      type: DataTypes.CHAR(100),
-      allowNull: true
-    },
     text: {
       type: DataTypes.CHAR(255),
-      allowNull: false,
-      defaultValue: "Text"
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'board',
+    tableName: 'comment',
     timestamps: true,
     indexes: [
       {
@@ -38,10 +42,10 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "board_user",
+        name: "b_c",
         using: "BTREE",
         fields: [
-          { name: "user_id" },
+          { name: "board_id" },
         ]
       },
     ]
