@@ -146,6 +146,23 @@ async function logOutUser(req,res){
     return res.redirect('/');
 }
 
+async function updateStatus(req,res){
+    const userAuth = req.session.userAuth;
+    const id = req.query.id;
+    const how = req.query.how;
+    console.log(id,how);
+    try{
+        if(userAuth == 1){
+            await userService.updateStatus(id,how);
+        }else{
+            return res.redirect('/');
+        }
+        return res.redirect('/user/list');
+    }catch(err){
+        return res.status(500).json(err);
+    }
+}
+
 module.exports ={
     loginUser:loginUser,
     getUser:getUser,
@@ -153,5 +170,6 @@ module.exports ={
     insertUser:insertUser,
     updateUser:updateUser,
     deleteUser:deleteUser,
-    logOutUser:logOutUser
+    logOutUser:logOutUser,
+    updateStatus:updateStatus
 }

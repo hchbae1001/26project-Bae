@@ -36,6 +36,28 @@ async function getUser(id){
     }
 }
 
+async function updateStatus(id,how){
+    try{
+        //0 = on -> off , 1 = off -> on 
+        if(how == 1){
+            await models.user.update({
+                user_status:0,
+                failStack:0
+                },{where:{id:id}}
+            );
+        }else{
+            await models.user.update({
+                user_status:1,
+                failStack:5,
+                },{where:{id:id}}
+            );
+        }
+    }catch(err){
+        console.log(err);
+        throw Error(err);
+    }
+}
+
 async function insertUser(email,password,number,name,phone){
     try{
         await models.user.create({
@@ -131,5 +153,6 @@ module.exports ={
     insertUser:insertUser,
     updateUser:updateUser,
     deleteUser:deleteUser,
-    updateUserExceptPwd:updateUserExceptPwd
+    updateUserExceptPwd:updateUserExceptPwd,
+    updateStatus:updateStatus
 }

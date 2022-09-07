@@ -9,6 +9,9 @@ router.get('/logout', userController.logOutUser);
 router.post('/insert',userController.insertUser);
 // 관리자용 회원 리스트 확인
 router.get('/list', userController.getUsers);
+//관리자용 user_status 변경
+router.get('/status',userController.updateStatus);
+
 // 정보, 업데이트, 삭제
 // router.get('/status/:id',userController.userStatus);
 // router.get('/status',userController.userStatus);

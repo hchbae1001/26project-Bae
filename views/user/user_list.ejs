@@ -53,9 +53,9 @@
                     </td>
                     <td>
                         <% if(data[i].user_status == false){ %>
-                            <a href="/user/status?id=<%= data[i].id%>&how='OFF'">활성 상태</a> 
+                            <a href="/user/status?id=<%= data[i].id%>&how=0">활성 상태</a> 
                         <%}else{%>
-                            <a href="/user/stauts?id=<%= data[i].id%>&how='ON'">비활성 상태</a> 
+                            <a href="/user/status?id=<%= data[i].id%>&how=1">비활성 상태</a> 
                         <%}%>
                         
                     </td>
